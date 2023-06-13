@@ -20,11 +20,12 @@
     }
   },
   "main": "./lib/index.js",
+  "homepage": "https://github.com/SamNofee/koacat",
   "repository": {
     "type": "git",
-    "url": "https://nofee.fun:1000/SamNofee/koacat.git"
+    "url": "https://github.com/SamNofee/koacat.git"
   },
-  "license": "CC",
+  "license": "MIT",
   "scripts": {
     "build": "npx rollup -c",
     "tsc": "npx tsc --outDir dist -p tsconfig.json",

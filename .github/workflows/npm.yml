@@ -13,8 +13,9 @@ jobs:
         with:
           node-version: 16
           registry-url: https://registry.npmjs.org/
+      - run: git config --global user.name 'samnofee'
+      - run: git config --global user.email 'zhangengru@163.com'
       - run: npm install
-      - run: npm run tsc
       - run: npm run lint
       - run: npm run test
       - run: npm run build

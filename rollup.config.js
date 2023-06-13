@@ -16,7 +16,7 @@ export default {
 	input,
   output: [
     {
-      dir: 'lib', // ES 模块输出路径
+      dir: 'lib',
       format: 'esm',
       preserveModules: true,
       entryFileNames: '[name].js'
@@ -30,7 +30,7 @@ export default {
   ],
   plugins: [
     typescript({
-      tsconfig: 'tsconfig.json', // TypeScript 配置文件路径
+      tsconfig: 'tsconfig.json',
     }),
   ],
 }

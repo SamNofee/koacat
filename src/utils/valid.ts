@@ -38,8 +38,10 @@ const isoDateKeyword: KeywordDefinition = {
 }
 
 
-const ajv = new Ajv({ coerceTypes: true })
-  .addKeyword('objectId', objectIdKeyword)
+const ajv = new Ajv({
+  coerceTypes: true,
+  allowUnionTypes: true
+}).addKeyword('objectId', objectIdKeyword)
   .addKeyword('isoDate', isoDateKeyword)
 
 export function valid<T>(schema: JSONSchemaType<T>, data): T {

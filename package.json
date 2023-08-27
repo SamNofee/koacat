@@ -1,6 +1,6 @@
 {
   "name": "koacat",
-  "version": "0.0.8",
+  "version": "0.0.9",
   "description": "A Bloat-free Warpper of Koa & Vue-SSR & MongoDB",
   "author": "SamNofee",
   "type": "module",

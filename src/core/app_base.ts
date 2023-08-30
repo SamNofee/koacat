@@ -73,6 +73,8 @@ export interface AppOptions<O = any> {
    * @type {?KoaOptions}
    */
   koaOptions?: KoaOptions,
+
+  koaBodyOptions?: koaBody.IKoaBodyOptions,
   /**
    * Port to listen, default: 80
    * @date 2023/6/13 - 11:21:50
@@ -167,7 +169,7 @@ export class AppBase extends Koa {
 
     if (options?.port) app.port = options.port
 
-    if (options?.mountBodyParser) app.mountBodyParser()
+    if (options?.mountBodyParser) app.mountBodyParser(options?.koaBodyOptions)
     if (options?.mountRouter) app.mountRouter()
   
     if (options?.onMounted) await options.onMounted(app)
@@ -270,7 +272,7 @@ export class AppBase extends Koa {
    *
    * @public
    */
-  public mountBodyParser() {
-    this.use(koaBody())
+  public mountBodyParser(options?: koaBody.IKoaBodyOptions) {
+    this.use(koaBody(options))
   }
 }

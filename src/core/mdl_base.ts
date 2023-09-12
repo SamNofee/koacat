@@ -1,4 +1,4 @@
-import { FilterQuery, ClientSession, ProjectionType, UpdateQuery, QueryOptions } from 'mongoose'
+import { FilterQuery, ClientSession, ProjectionType, UpdateQuery, QueryOptions, AnyKeys } from 'mongoose'
 import { ReturnModelType, getModelForClass } from '@typegoose/typegoose'
 import { ObjectId } from 'mongodb'
 import { AnyParamConstructor } from '@typegoose/typegoose/lib/types'
@@ -33,20 +33,21 @@ export class MdlBase<
     options?: Options & {
       projection?: ProjectionType<Doc>,
       skip?: number,
-      limit?: number
+      limit?: number,
+      extra?: QueryOptions<Doc>
     }
   ): Promise<Doc[]> {
     if (!Object.keys(filter).length) {
       throw new Error('Invalid filter')
     }
 
-    const queryOptions: QueryOptions<Doc> = {}
+    const queryOptions: QueryOptions<Doc> = options?.extra || {}
     queryOptions.limit = options?.limit
     queryOptions.skip = options?.skip
 
     return this.Model.find(filter, options?.projection, queryOptions)
-    .session(options?.session || null)
-    .lean()
+      .session(options?.session || null)
+      .lean()
   }
 
   public async get(

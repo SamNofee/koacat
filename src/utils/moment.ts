@@ -1,6 +1,6 @@
 import m from 'moment'
 
-m.defineLocale('zh', {
+m.updateLocale('zh', {
   months: '一月_二月_三月_四月_五月_六月_七月_八月_九月_十月_十一月_十二月'.split(
     '_'
   ),
@@ -60,11 +60,10 @@ m.defineLocale('zh', {
     doy: 4,
   },
 })
-
 m.locale('zh')
 
 export const moment = m
 
 export function formatToCn(isodate: string): string {
-  return moment(isodate).format('YYYY 年 MM 月 DD 日 hh:mm:ss')
+  return moment(isodate).format('YYYY 年 MM 月 DD 日 HH:mm:ss')
 }

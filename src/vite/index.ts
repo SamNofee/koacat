@@ -133,7 +133,7 @@ export class Vite {
     await buildForProduction(serverConfig)
   }
 
-  public async render(key: string, ssrData: any, title = 'TITLE'): Promise<string> {
+  public async render(key: string, ssrData: any): Promise<{ cssHtml: string, ssrHtml: string }> {
     if (!include(this._mapping, key)) {
       throw `Can not found ${key}. Please call "vite.include(${key}, '/path/to/foo.vue')" before render`
     }
@@ -160,6 +160,12 @@ export class Vite {
     const cssHtml = collect()
     const ssrDataHtml = `<script>window.ssrData=${JSON.stringify(ssrData)}</script>`
     const ssrHtml = appHtml + ssrDataHtml
+
+    return { cssHtml, ssrHtml }
+  }
+
+  public async renderToHtml(key: string, ssrData: any, title = 'TITLE'): Promise<string> {
+    const { cssHtml, ssrHtml } = await this.render(key, ssrData)
 
     let html = ''
     if (this.checkIsProd()) {

@@ -1,5 +1,4 @@
 import { CtxBase } from '../core/ctx_base'
-import { LOG, ERROR } from '../winston'
 
 export interface ErrInfo {
   status: number,
@@ -46,8 +45,6 @@ export function resErr(ctx: CtxBase, err: Err) {
     code: err.errInfo.code
   }
   ctx.status = err.errInfo.status
-
-  ERROR(`PATH: ${ctx.method} ${ctx.path}; MSG: ${err.errInfo.message}; CODE: ${err.errInfo.code}`)
 }
 
 export function resOK(ctx: CtxBase, data?: any, options?: {
@@ -60,14 +57,10 @@ export function resOK(ctx: CtxBase, data?: any, options?: {
     code: 'OK'
   }
   ctx.status = 200
-
-  LOG(`PATH: ${ctx.method} ${ctx.path}; OK`)
 }
 
 export function resHtml(ctx: CtxBase, html: string) {
   ctx.type = 'html'
   ctx.body = html
   ctx.status = 200
-
-  LOG(`PATH: ${ctx.method} ${ctx.path}; HTML`)
 }

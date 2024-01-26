@@ -1,5 +1,5 @@
 import { build as buildForProduction, InlineConfig } from 'vite'
-import { include } from '../utils/lodash'
+import { include } from '../utils/helper'
 import { exist, read, write, cwd, createDir, dirname, join, relative } from '../utils/fs'
 import _ from 'lodash'
 import { createServer, ViteDevServer } from 'vite'

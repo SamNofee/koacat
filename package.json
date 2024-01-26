@@ -1,7 +1,7 @@
 {
   "name": "koacat",
-  "version": "0.1.6",
-  "description": "A Bloat-free Warpper of Koa & Vue-SSR & MongoDB",
+  "version": "0.2.0",
+  "description": "A Bloat-free Warpper of Koa & Vue-SSR & MongoDB (BETA)",
   "author": "SamNofee",
   "type": "module",
   "types": "./lib/index.d.ts",
@@ -18,9 +18,9 @@
       "import": "./lib/utils/chance.js",
       "require": "./lib/utils/chance.cjs"
     },
-    "./lib/utils/lodash": {
-      "import": "./lib/utils/lodash.js",
-      "require": "./lib/utils/lodash.cjs"
+    "./lib/utils/helper": {
+      "import": "./lib/utils/helper.js",
+      "require": "./lib/utils/helper.cjs"
     }
   },
   "main": "./lib/index.js",
@@ -50,8 +50,6 @@
     "chance": "^1.1.8",
     "commander": "^10.0.0",
     "execa": "^6.1.0",
-    "husky": "^8.0.3",
-    "jsonwebtoken": "^9.0.0",
     "koa": "^2.13.4",
     "koa-body": "^5.0.0",
     "koa-connect": "^2.1.0",
@@ -61,9 +59,7 @@
     "moment": "^2.29.4",
     "mongoose": "^6.6.5",
     "vite": "^3.1.8",
-    "vue": "^3.4.15",
-    "winston": "^3.8.2",
-    "winston-daily-rotate-file": "^4.7.1"
+    "vue": "^3.4.15"
   },
   "devDependencies": {
     "@commitlint/cli": "^17.6.3",
@@ -79,6 +75,7 @@
     "c8": "^7.13.0",
     "eslint": "^8.32.0",
     "glob": "^10.2.5",
+    "husky": "^8.0.3",
     "mocha": "^10.0.0",
     "nodemon": "^2.0.20",
     "power-assert": "^1.6.1",

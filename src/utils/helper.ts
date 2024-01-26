@@ -1,9 +1,3 @@
-import _ from 'lodash'
-
-export function template(template: string, data: Record<string, string>) {
-  return (_.template(template))(data)
-}
-
 export function include(source: any, target: any): boolean {
   if(source?.indexOf !== undefined) {
     return source.indexOf(target) !== -1
@@ -12,10 +6,6 @@ export function include(source: any, target: any): boolean {
   } else {
     return false
   }
-}
-
-export function forceSlice(arr, start: number, end: number) {
-  return _.slice(arr, start < 0 ? 0 : start, end)
 }
 
 export function namedCapturing<Groups extends string>(

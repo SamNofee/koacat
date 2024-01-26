@@ -1,6 +1,6 @@
 export * from './chance'
 export * from './fs'
-export * from './lodash'
+export * from './helper'
 export * from './moment'
 export * from './os'
 export * from './res'

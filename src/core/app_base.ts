@@ -3,6 +3,13 @@ import { CtxBase } from './ctx_base'
 import Router from 'koa-router'
 import koaBody from 'koa-body'
 
+export const LogLevelSet = ['DEBUG', 'INFO', 'WARN', 'ERROR'] as const
+export type LogLevel = (typeof LogLevelSet)[number]
+
+export type Log = (level: LogLevel, message: string) => void
+
+export type ErrorHandler = (err: any, ctx: CtxBase) => any
+
 export interface KoaOptions {
   env?: string,
   keys?: string[],
@@ -17,13 +24,12 @@ export interface AppOptions<O = any> {
   koaBodyOptions?: koaBody.IKoaBodyOptions,
   port?: number,
   refresh?: boolean,
-  errHandlerFn?: ErrHandlerFn,
   mountRouter?: boolean,
   mountBodyParser?: boolean,
+  errorHandler?: ErrorHandler,
+  log?: Log,
   onMounted?: (app: AppBase & O) => Promise<any>
 }
-
-export type ErrHandlerFn = (err: any, ctx: CtxBase) => any
 
 export class AppBase extends Koa {
 
@@ -36,8 +42,9 @@ export class AppBase extends Koa {
 
     const app = new AppBase(options?.koaOptions) as AppBase & O
 
-    app.mountErrHandler(options?.errHandlerFn)
+    app.mountErrHandler(options?.errorHandler)
 
+    if (options?.log) app.log = options.log
     if (options?.port) app.port = options.port
 
     if (options?.mountBodyParser) app.mountBodyParser(options?.koaBodyOptions)
@@ -56,22 +63,24 @@ export class AppBase extends Koa {
     super(koaOptions)
   }
 
-  private _isRuning = false
+  private isRuning = false
 
   public port = 8080
 
   public router: Router<any, CtxBase>
 
+  public log: Log = (level: LogLevel, message: string) => console.log(level, message)
+
   public run() {
-    if (this._isRuning) {
+    if (this.isRuning) {
       return
     }
     
     this.listen(this.port)
-    this._isRuning = true
+    this.isRuning = true
   }
 
-  public mountErrHandler(fn?: ErrHandlerFn) {
+  public mountErrHandler(fn?: ErrorHandler) {
     this.use(async (ctx: CtxBase, next: Next) => {
       try {
         await next()

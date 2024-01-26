@@ -1,4 +1,4 @@
-import { FilterQuery, ClientSession, ProjectionType, UpdateQuery, QueryOptions, AnyKeys } from 'mongoose'
+import { FilterQuery, ClientSession, ProjectionType, UpdateQuery, QueryOptions } from 'mongoose'
 import { ReturnModelType, getModelForClass } from '@typegoose/typegoose'
 import { ObjectId } from 'mongodb'
 import { AnyParamConstructor } from '@typegoose/typegoose/lib/types'

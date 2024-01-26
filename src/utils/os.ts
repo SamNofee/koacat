@@ -1,4 +1,4 @@
-import { namedCapturing } from './lodash'
+import { namedCapturing } from './helper'
 import { execaCommand, execaCommandSync, Options } from 'execa'
 
 export function killPID(pid: number) {

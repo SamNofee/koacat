@@ -1,5 +1,5 @@
 import Router from 'koa-router'
-import { include } from '../utils/lodash'
+import { include } from '../utils/helper'
 import { Middleware, Next } from 'koa'
 import { CtxBase } from './ctx_base'
 import { AppBase } from './app_base' 

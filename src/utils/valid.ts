@@ -7,8 +7,8 @@ export interface Paging {
 }
 
 export const paging = {
-  skip: { type: 'number', nullable: true },
-  limit: { type: 'number', nullable: true },
+  skip: { type: 'number', nullable: true, minimum: 0 },
+  limit: { type: 'number', nullable: true, maximum: 100 },
 } as const
 
 const objectIdKeyword: KeywordDefinition = {

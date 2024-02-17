@@ -1,14 +1,14 @@
 import Router from 'koa-router'
-import { include } from '../utils/helper'
 import { Middleware, Next } from 'koa'
 import { CtxBase } from './ctx_base'
-import { AppBase } from './app_base' 
+import { AppBase } from './app_base'
 
-export interface Route<C extends CtxBase> {
+export interface Route<C extends CtxBase, Extra = any> {
   path: string | RegExp,
   tags?: string[],
   name?: string,
   intro?: string,
+  extra?: Extra
   middlewares: Middleware[],
   all?: (ctx: C, next: Next) => Promise<any>,
   get?: (ctx: C, next: Next) => Promise<any>,
@@ -23,15 +23,20 @@ export class ApiBase<A extends AppBase, C extends CtxBase> {
   }
 
   public app: A
-  public routes: Route<C>[]
+  public routes: Route<C, object>[]
 
   public attachApisToRouter(router: Router<any, C>) {
-    this.routes.forEach(api => {
-      if (include(api, 'all')) router.all(api.path, ...api.middlewares, api.all!)
-      if (include(api, 'get')) router.get(api.path, ...api.middlewares, api.get!)
-      if (include(api, 'post')) router.post(api.path, ...api.middlewares, api.post!)
-      if (include(api, 'delete')) router.delete(api.path, ...api.middlewares, api.delete!)
-      if (include(api, 'put')) router.put(api.path, ...api.middlewares, api.put!)
+    this.routes.forEach(route => {
+      const builtin = (ctx: C, next: Next) => {
+        ctx.route = route
+        next()
+      }
+
+      for (const prop of ['all', 'get', 'post', 'delete', 'put']) {
+        if (route[prop]) {
+          router[prop](route.path, builtin, ...route.middlewares, route[prop])
+        }
+      }
     })
   }
 }

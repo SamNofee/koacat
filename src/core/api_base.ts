@@ -3,7 +3,7 @@ import { Middleware, Next } from 'koa'
 import { CtxBase } from './ctx_base'
 import { AppBase } from './app_base'
 
-export interface Route<C extends CtxBase, Extra = any> {
+export interface RouteBase<C extends CtxBase, Extra = any> {
   path: string | RegExp,
   tags?: string[],
   name?: string,
@@ -23,7 +23,7 @@ export class ApiBase<A extends AppBase, C extends CtxBase> {
   }
 
   public app: A
-  public routes: Route<C, object>[]
+  public routes: RouteBase<C, object>[]
 
   public attachApisToRouter(router: Router<any, C>) {
     this.routes.forEach(route => {

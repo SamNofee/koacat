@@ -25,16 +25,19 @@ export class ApiBase<A extends AppBase, C extends CtxBase> {
   public app: A
   public routes: RouteBase<C, object>[]
 
-  public attachApisToRouter(router: Router<any, C>) {
+  public attachRoutesToRouter(router: Router<any, C>, hook?: (ctx: C, route: RouteBase<C, object>) => any) {
     this.routes.forEach(route => {
-      const builtin = (ctx: C, next: Next) => {
-        ctx.route = route
-        next()
-      }
-
       for (const prop of ['all', 'get', 'post', 'delete', 'put']) {
         if (route[prop]) {
-          router[prop](route.path, builtin, ...route.middlewares, route[prop])
+          router[prop](
+            route.path,
+            (ctx: C, next: Next) => {
+              hook && hook(ctx, route)
+              next()
+            },
+            ...route.middlewares,
+            route[prop]
+          )
         }
       }
     })

@@ -31,9 +31,9 @@ export class ApiBase<A extends AppBase, C extends CtxBase> {
         if (route[prop]) {
           router[prop](
             route.path,
-            (ctx: C, next: Next) => {
+            async (ctx: C, next: Next) => {
               hook && hook(ctx, route)
-              next()
+              await next()
             },
             ...route.middlewares,
             route[prop]

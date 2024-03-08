@@ -18,5 +18,4 @@ export class ApiBase<A extends AppBase, C extends CtxBase> {
   }
 
   public app: A
-  public routes: Record<string, RouteBase<C>>
 }

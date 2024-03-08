@@ -1,6 +1,6 @@
 import Koa, { Next } from 'koa'
 import { CtxBase } from './ctx_base'
-import { RouteBase } from './api_base'
+import { ApiBase, RouteBase } from './api_base'
 import Router from 'koa-router'
 import koaBody from 'koa-body'
 
@@ -79,11 +79,16 @@ export class AppBase extends Koa {
     this.isRuning = true
   }
 
-  public attachToRouter(router: Router<any, CtxBase>, routes: Record<string, RouteBase<CtxBase>>) {
-    for (const key in routes) {
-      const route = routes[key]
-      router[route.method](route.path, ...route.middlewares, route.handler)
+  public attachToRouter(router: Router<any, CtxBase>, api: ApiBase<AppBase, CtxBase>) {
+    const keys: string[] = []
+    for (const key in api) {
+      const route = api[key]
+      if (route?.method && route?.middlewares && route?.handler && route?.path) {
+        router[route.method](route.path, ...route.middlewares, route.handler)
+        keys.push(key)
+      }
     }
+    this.log('INFO', `Attached ${keys.join(', ')}`)
   }
 
   public mountErrHandler(fn?: ErrorHandler) {

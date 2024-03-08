@@ -4,11 +4,12 @@ import { AppBase } from './app_base'
 
 export type RouteBaseMethod = 'all' | 'get' | 'post' | 'delete' | 'put'
 
-export interface RouteBase<C extends CtxBase> extends Object {
+export interface RouteBase<C extends CtxBase> {
   method: RouteBaseMethod,
   path: string | RegExp,
   middlewares: Middleware[],
-  handler: (ctx: C, next: Next) => Promise<any>
+  handler: (ctx: C, next: Next) => Promise<any>,
+  [key: string]: any
 }
 
 export class ApiBase<A extends AppBase, C extends CtxBase> {

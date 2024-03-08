@@ -1,5 +1,6 @@
 import Koa, { Next } from 'koa'
 import { CtxBase } from './ctx_base'
+import { RouteBase } from './api_base'
 import Router from 'koa-router'
 import koaBody from 'koa-body'
 
@@ -33,7 +34,7 @@ export interface AppOptions<O = any> {
 
 export class AppBase extends Koa {
 
-  static createdApp
+  static createdApp: AppBase
 
   static async createApp<O>(options?: AppOptions<O>): Promise<AppBase & O>  {
     if (AppBase.createdApp && !options?.refresh) {
@@ -72,12 +73,17 @@ export class AppBase extends Koa {
   public log: Log = (level: LogLevel, message: string) => console.log(level, message)
 
   public run() {
-    if (this.isRuning) {
-      return
-    }
+    if (this.isRuning) return
     
     this.listen(this.port)
     this.isRuning = true
+  }
+
+  public attachToRouter(router: Router<any, CtxBase>, routes: Record<string, RouteBase<CtxBase>>) {
+    for (const key in routes) {
+      const route = routes[key]
+      router[route.method](route.path, ...route.middlewares, route.handler)
+    }
   }
 
   public mountErrHandler(fn?: ErrorHandler) {

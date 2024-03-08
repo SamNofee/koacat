@@ -1,7 +1,7 @@
 {
   "name": "koacat",
-  "version": "0.2.6",
-  "description": "A Bloat-free Warpper of Koa & Vue-SSR & MongoDB (BETA)",
+  "version": "0.3.0",
+  "description": "A Bloat-free Web Framework (BETA)",
   "author": "SamNofee",
   "type": "module",
   "types": "./lib/index.d.ts",
